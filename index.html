@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cálculo de Recibos de Sueldo</title>
+    <link rel="stylesheet" href="css/estilo.css"> <!-- Conexión con el archivo .css -->
+    <script type="text/javascript" src="js/funciones.js" defer></script> <!-- Archivo JavaScript -->
+</head>
+
+<body>
+
+    <header>
+        <h1>Bienvenido a la página para calcular tu recibo de sueldo</h1>
+        <h3> » N° de consultas (2964) 608726 ☏ Romero Sergio David »
+    </header>
+
+    <section>
+        <h2>Cálculo de Pago de Haberes</h2> <!-- HABERES -->
+        <form name="informacion" onsubmit="return calcularResultados()">
+            <p>Ingrese su sueldo básico:</p>
+            <input type="number" id="sueldo_basico" placeholder="Sueldo básico" required min="0" step="0.01">
+            <p>Ingrese el sueldo neto que cobro según recibo:</p>
+            <input type="number" id="sueldo_recibo" placeholder="Sueldo Neto según recibo" required min="0" step="0.01">
+
+            <p>Ingrese la cantidad de años de antigüedad:</p>
+            <input type="number" id="antiguedad" placeholder="Antigüedad" required min="0">
+
+            <p>Ingrese su presentismo si corresponde, sino coloque 0:</p>
+            <input type="number" id="presentismo" placeholder="Presentismo" required min="0" step="0.01">
+
+            <p>Ingrese la cantidad de horas nocturnas si corresponde, sino coloque 0:</p>
+            <input type="number" id="horas_nocturnas" placeholder="Horas Nocturnas" required min="0" step="0.01">
+
+            <p>Ingrese la cantidad de horas trabajadas en un día feriado si corresponde, sino coloque 0:</p>
+            <input type="number" id="horas_feriado" placeholder="Horas Feriado" required min="0" step="0.01">
+
+            <p>Ingrese la cantidad de días feriados no trabajados si corresponde, sino coloque 0:</p>
+            <input type="number" id="feriados_no_trabajados" placeholder="Feriados no trabajados" required min="0">
+
+            
+
+            <p>Ingrese su Adicional ART25 en caso de tenerlo remunerativo, caso contrario coloque 0:</p>
+            <input type="number" id="adicional_art25_rem" placeholder="Adicional Art25 Remunerativo" required min="0" step="0.01">
+
+            <p>Ingrese la cantidad de dinero que pidio por anticipo, si no pidio anticipo coloque 0:</p>
+            <input type="number" id="anticipo" placeholder="Anticipo" required min="0" step="0.01">
+
+            <h3>HORAS EXTRAS</h3> <!-- HORAS EXTRAS -->
+
+            <p>¿Tuvo horas extras?</p> 
+
+               <label>
+               <input type="radio" name="horas_extras" value="si" id="horas_si" required> Sí
+               </label>
+
+               <label>
+               <input type="radio" name="horas_extras" value="no" id="horas_no" required> No
+               </label>
+
+            <div id="horasCampos" style="display:none;">
+
+            <p>Ingrese la cantidad de horas extras al 50% si corresponde, sino coloque 0:</p>
+            <input type="number" id="horas_50" placeholder="Horas al 50%" required min="0" step="0.01">
+
+            <p>Ingrese la cantidad de horas extras al 100% si corresponde, sino coloque 0:</p>
+            <input type="number" id="horas_100" placeholder="Horas al 100%" required min="0" step="0.01">
+
+            <p>Ingrese la cantidad de horas extras nocturnas al 50% si corresponde, sino coloque 0:</p>
+            <input type="number" id="horas_noturnas_50" placeholder="Horas Nocturnas al 50%" required min="0" step="0.01">
+
+            <p>Ingrese la cantidad de horas extras nocturnas al 100% (Sábados a partir de las 13pm y domingos) si corresponde, sino coloque 0:</p>
+            <input type="number" id="horas_noturnas_100" placeholder="Horas Nocturnas al 100%" required min="0" step="0.01">
+
+            </div>
+
+            
+
+            <p>
+                <label for="gremio">¿Está adherido al gremio?</label> <!-- GREMIO -->
+                <select id="gremio" required>
+                    <option value="" disabled selected>Seleccionar</option>
+                    <option value="si">Sí</option>
+                    <option value="no">No</option>
+                </select>
+            </p>
+
+            <div id="descuentoOptions" style="display:none; margin-top: 10px;">
+                <label for="descuento">Selecciona el porcentaje de descuento:</label>
+                <select id="descuento">
+                    <option value="" disabled selected>Seleccionar</option>
+                    <option value="3">3%</option>
+                    <option value="3.5">3.5%</option>
+                </select>
+            </div>
+
+
+            <p>
+                <label for="retencion_jud">¿Tiene retención judicial?</label> <!-- RETENCIÓN JUDICIAL -->
+                <select id="retencion_jud" required>
+                    <option value="" disabled selected>Seleccionar</option>
+                    <option value="si">Sí</option>
+                    <option value="no">No</option>
+                </select>
+            </p>
+
+            <div id="retencionOptions" style="display:none; margin-top: 10px;">
+                <label for="retencion">Ingrese el porcentaje de retención sin el %:</label>
+                <input type="number" id="retencion" placeholder="Porcentaje de retención" min="1" />
+            </div>
+
+
+            <h3>VACACIONES</h3> <!-- VACACIONES -->
+
+            <p>¿Estuvo de vacaciones?</p>
+
+                <label>
+                <input type="radio" name="vacaciones_radio" value="si" id="vacaciones_si" required> Sí
+                </label>
+        
+                <label>
+                <input type="radio" name="vacaciones_radio" value="no" id="vacaciones_no" required> No
+                </label>
+
+            <div id="vacacionesCampos" style="display:none;">
+
+            <p>Ingresa la cantidad de días de vacaciones que le corresponde:</p>
+            <input type="number" id="vacaciones" placeholder="Vacaciones" required min="0">
+
+            <p>Ingresa la cantidad de días adicionales de vacaciones si corresponde, sino coloca 0:</p>
+            <input type="number" id="adicional_vacaciones" placeholder="Adicional Vacaciones" required min="0">
+
+            </div>
+
+
+            <h3>VIATICOS Completar en caso que corresponda, sino colocar 0, tener en cuenta que son todos NO REMUNERATIVOS</h3> <!-- VIATICOS -->
+
+            <p>Ingresa el Viatico no remunerativo-Acuerdo2021 que le corresponde:</p>
+            <input type="number" id="viatico_acuerdo_2021" placeholder="Viatico Acuerdo 2021" required min="0" step="0.01">
+
+            <p>Ingresa el Viatico que le corresponde:</p>
+            <input type="number" id="viatico" placeholder="Viatico" required min="0" step="0.01">
+
+            <p>Ingresa el Adicional ART25 que le corresponde:</p>
+            <input type="number" id="adicional_art25" placeholder="Adicional Articulo 25" required min="0" step="0.01">
+
+            <h3>Ausentismo y Licencias</h3> <!-- AUSENTISMO Y LICENCIAS -->
+
+            <p>
+               <label for="ausentismo">¿Hubo ausentismo?</label> 
+               <select id="ausentismo" required onchange="mostrarMotivoAusentismo()">
+                   <option value="" disabled selected>Seleccionar</option>
+                   <option value="si">Sí</option>
+                   <option value="no">No</option>
+                </select>
+            </p>
+
+            <!-- Motivo del ausentismo, solo visible si hubo ausentismo -->
+            <p id="motivo-ausentismo" style="display: none;">
+                <label for="motivo">Motivo del ausentismo:</label>
+                <select id="motivo">
+                    <option value="" disabled selected>Seleccionar</option>
+                    <option value="justificada">Justificada</option>
+                    <option value="injustificada">Injustificada</option>
+                </select>
+            </p>
+
+            <!-- Cantidad de ausencias, solo visible si el ausentismo es justificado -->
+            <p id="cantidad-ausencias" style="display: none;">
+                <label for="numero-ausencias">Número de ausencias:</label>
+                <input type="number" id="numero-ausencias" min="1">
+            </p>
+
+            <!-- Mostrar resultado del presentismo ajustado -->
+            <p id="resultado-presentismo">
+                <label for="presentismo-ajustado">Presentismo ajustado:</label>
+                <span id="presentismo-ajustado">0</span>
+            </p>
+
+            <p>¿Tuvo licencia por algún motivo?</p>
+
+                <label>
+                <input type="radio" name="licencia" value="si" id="licencia_si" required> Sí
+                </label>
+
+                <label>
+                <input type="radio" name="licencia" value="no" id="licencia_no" required> No
+                </label>
+
+            <div id="licenciaCampos" style="display:none;">
+
+            <p>Ingrese los días de licencia por enfermedad si corresponde, sino coloque 0</p>
+            <input type="number" id="licencia_enfermedad" placeholder="Días de Licencia por Enfermedad" required min="0">
+
+            <p>Ingrese los días de licencia varias, sino coloque 0: (Este apartado abarca examen, mudanza, fallecimiento, nacimiento, casamiento o donación de sangre)</p>
+            <input type="number" id="licencias" placeholder="Días de Licencia" required min="0">
+
+            <p>Ingrese los días de licencia gremial si corresponde, sino coloque 0:</p>
+            <input type="number" id="licencia_gremial" placeholder="Días de Licencia gremial" required min="0">
+
+            </div>
+
+
+            <h3>AGUINALDO</h3> <!-- AGUINALDO -->
+
+            <p>¿Cobró Aguinaldo?</p>
+            <label>
+            <input type="radio" name="aguinaldo_radio" value="si" id="aguinaldo_si" required> Sí
+            </label>
+
+            <label>
+            <input type="radio" name="aguinaldo_radio" value="no" id="aguinaldo_no" required> No
+            </label>
+
+            <div id="aguinaldoCampos" style="display:none;">
+
+            <p>Ingresa el total de Haberes más alto de estos últimos seis meses:</p>
+            <input type="number" id="aguinaldo" placeholder="Aguinaldo" required min="0" step="0.01">
+
+            <p>Ingresa el aguinaldo neto que cobró según recibo:</p>
+            <input type="number" id="aguinaldo_recibo" placeholder="Aguinaldo Según Recibo" required min="0" step="0.01">
+
+            </div>
+
+
+            <h3>Si ya completaste todas las casillas, presiona calcular:</h3>
+            <input type="submit" id="calcular" value="CALCULAR">
+
+        </form>
+    </section>
+
+    <section>
+        <h2>Valor de una hora</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th class="marron">Datos</th>
+                    <th>Cálculo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Hora Simple</td> 
+                    <td id="resultado_hora_simple"> </td>
+                </tr>
+                <tr>
+                    <td>Hora Nocturna</td>
+                    <td id="resultado_hora_nocturna"> </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="resultados">
+        <h2>Resultados</h2>
+        
+        <table> <!-- TABLA HABERES CON APORTES -->
+            <thead>
+                <tr>
+                    <th class="marron">Haberes con Aportes</th>
+                    <th>Cálculo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Sueldo Básico</td> 
+                    <td id="resultado_sueldo"></td>
+                </tr>
+                <tr>
+                    <td>Antigüedad</td>
+                    <td id="resultado_antiguedad"></td>
+                </tr>
+                <tr>
+                    <td>Presentismo:</td> 
+                    <td id="resultado_presentismo"></td>
+                </tr>
+                <tr>
+                    <td>Total por Horas Nocturnas</td>
+                    <td id="resultado_total_horas_nocturnas"></td>
+                </tr>
+                <tr>
+                    <td>Total por Horas Trabajadas en días feriados</td> 
+                    <td id="resultado_total_horas_feriados"></td>
+                </tr>
+                <tr>
+                    <td>Horas Extras al 50%</td> 
+                    <td id="resultado_horas_50"></td>
+                </tr>
+                <tr>
+                    <td>Horas Extras al 100%</td> 
+                    <td id="resultado_horas_100"></td>
+                </tr>
+                <tr>
+                    <td>Horas Extras Noturnas al 50%</td> 
+                    <td id="resultado_horas_noturnas_50"></td>
+                </tr>
+                <tr>
+                    <td>Horas Extras Noturnas al 100%</td> 
+                    <td id="resultado_horas_noturnas_100"></td>
+                </tr>
+                <tr>
+                    <td>Feriados no trabajados</td> 
+                    <td id="resultado_total_feriados_no_trabajados"></td>
+                </tr>
+                <tr>
+                    <td>Licencia por vacaciones</td>
+                    <td id="resultado_lic_vacaciones"></td>
+                </tr>
+                <tr>
+                    <td>Ausencia por vacaciones</td>
+                    <td id="resultado_aus_vacaciones"></td>
+                </tr>
+                <tr>
+                    <td>Adicional por vacaciones:</td>
+                    <td id="resultado_adic_vacaciones"> </td>
+                </tr>
+                <tr>
+                    <td>ART25 en caso que sea remunerativo</td> 
+                    <td id="resultado_art_25_rem"> </td>
+                </tr>
+                <tr>
+                    <td>Licencia por Enfermedad</td> 
+                    <td id="resultado_total_licencia_enfermedad"> </td>
+                </tr>
+                <tr>
+                    <td>Licencias (examen, mudanza, fallecimiento, nacimiento, casamiento o donación de sangre)</td> 
+                    <td id="resultado_total_licencias"> </td>
+                </tr>
+                <tr>
+                    <td>Ausentismo (enfermedades, examen, mudanza, fallecimiento, nacimiento, casamiento o donación de sangre)</td> 
+                    <td id="resultado_total_ausencias"> </td>
+                </tr>
+                <tr>
+                    <td>Licencia Gremial</td> 
+                    <td id="resultado_total_licencia_gremial"> </td>
+                </tr>
+                <tr>
+                    <td>Zona Desfavorable:</td> 
+                    <td id="resultado_Zona"> </td>
+                </tr>
+                <tr>
+                    <td class="naranja">Total de Haberes</td>
+                    <td id="resultado_total_haberes"> </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table> <!-- TABLA HABERES SIN APORTES -->
+            <thead>
+                <tr>
+                    <th class="marron">Haberes sin Aportes</th>
+                    <th>Cálculo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Viatico no Remunerativo Acuerdo 2021</td> 
+                    <td id="resultado_acuerdo_2021"></td>
+                </tr>
+                <tr>
+                    <td>Viatico</td> 
+                    <td id="resultado_viatico"></td>
+                </tr>
+                <tr>
+                    <td>Adicional ART25</td> 
+                    <td id="resultado_art_25"></td>
+                </tr>
+                <tr>
+                    <td class="naranja">Total de Adicionales</td>
+                    <td id="resultado_total_adicionales"> </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table> <!-- TABLA DESCUENTOS -->
+            <thead>
+                <tr>
+                    <th class="marron">Descuentos</th>
+                    <th>Cálculo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Jubilacion</td>
+                    <td id="resultado_jubilacion"></td>
+                </tr>
+                <tr>
+                    <td>Ley 19032:</td>
+                    <td id="resultado_ley_19032"></td>
+                </tr>
+                <tr>
+                    <td>Obra Social:</td>
+                    <td id="resultado_obra_social"></td>
+                </tr>
+                <tr>
+                    <td>Descuento Anticipos</td>
+                    <td id="resultado_desc_anticipos"></td>
+                </tr>
+                <tr>
+                    <td>Sindicato</td>
+                    <td id="resultado_sindicato"></td>
+                </tr>
+                <tr>
+                    <td>Retención Judicial</td>
+                    <td id="resultado_retencion_judicial"></td>
+                </tr>
+                <tr>
+                    <td class="naranja">Total de Descuentos</td>
+                    <td id="resultado_total_retenciones"> </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table> <!-- TABLA AGUINALDO -->
+            <thead>
+                <tr>
+                    <th class="marron">Aguinaldo</th>
+                    <th>Cálculo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Aguinaldo sin descuentos S.A.C</td>
+                    <td id="resultado_valorAguinaldo"></td>
+                </tr>
+                <tr>
+                    <td>Descuentos</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Jubilacion sobre SAC</td>
+                    <td id="resultado_jubilacion_sobreSAC"></td>
+                </tr>
+                <tr>
+                    <td>Ley 19032 sobre SAC</td>
+                    <td id="resultado_ley_19032_sobreSAC"></td>
+                </tr>
+                <tr>
+                    <td>Obra Social sobre SAC</td>
+                    <td id="resultado_obra_social_sobreSAC"></td>
+                </tr>
+                <tr>
+                    <td>Sindicato sobre SAC</td>
+                    <td id="resultado_sindicato_sobreSAC"></td>
+                </tr>
+                <tr>
+                    <td>Retención judicial sobre SAC</td>
+                    <td id="resultado_retencion_judicial_sobreSAC"></td>
+                </tr>
+                <tr>
+                    <td class="naranja">Total de Descuentos sobre SAC</td>
+                    <td id="resultado_total_retenciones_sobreSAC"> </td>
+                </tr>
+            </tbody>
+        </table>
+        
+    </section>
+
+    <section id="total_sueldo_a_cobrar">
+        <h2>Totales</h2>
+        <table> <!-- TABLA TOTAL DE SUELDO A COBRAR -->
+            <thead>
+                <tr>
+                    <th class="marron">Total de Sueldo a Cobrar</th>
+                    <th>Cálculo</th>
+                    <th>Según recibo de sueldo</th>
+                    <th>Diferencia</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Neto a pagar</td>
+                    <td id="resultado_total"></td>
+                    <td id="resultado_sueldoRecibo"></td>
+                    <td id="resultado_diftotal"></td>
+                </tr>
+                
+               
+            </tbody>
+    </table>
+
+        <table> <!-- TABLA TOTAL DE AGUINALDO A COBRAR -->
+            <thead>
+                <tr>
+                    <th class="marron">Total de Aguilnado a cobrar</th>
+                    <th>Cálculo</th>
+                    <th>Según recibo de sueldo</th>
+                    <th>Diferencia</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Neto a pagar S.A.C</td>
+                    <td id="resultado_total_SAC"></td>
+                    <td id="resultado_aguinaldoRecibo"></td>
+                    <td id="resultado_diftotalSAC"></td>
+                </tr>
+                
+               
+            </tbody>
+    </table>
+    </section>
+    <section>
+        <button type="button" id="recargar" onclick="recargarPagina()">RECARGAR PARA VOLVER A COMPLETAR</button>
+        <!-- Botón de impresión -->
+        <button type="button" onclick="window.print()">IMPRIMIR</button>
+    </section>
+
+    <footer>
+        <h6>© 2024 » Recibos de sueldo » Diseño elaborado por Carina G Aliendro</h6>
+    </footer>
+
+</body>
+</html>

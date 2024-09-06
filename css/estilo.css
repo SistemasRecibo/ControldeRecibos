@@ -1,0 +1,174 @@
+/* Estilo general */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  background-color: #4CAF50; /* Verde */
+  color: #fff; /* Blanco */
+  padding: 1em;
+  text-align: center;
+}
+
+section {
+  background-color: #f4f4f4; /* Gris claro */
+  color: #333; /* Gris oscuro */
+  padding: 1em;
+}
+
+footer {
+  background-color: #333; /* Gris oscuro */
+  color: #fff; /* Blanco */
+  padding: 1em;
+  text-align: center;
+}
+
+/* Estilos del formulario */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form p {
+  margin: 0.5em 0;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="tel"] {
+  width: 100%;
+  padding: 0.5em;
+  margin-bottom: 1em;
+}
+
+input[type="radio"] {
+  margin-right: 0.5em;
+}
+
+input[type="range"] {
+  width: 100%;
+  margin: 0.5em 0;
+}
+
+.progress-value {
+  display: inline-block;
+  width: 50px;
+  text-align: right;
+  margin-left: 10px;
+}
+
+button,
+input[type="submit"] {
+  background-color: #4CAF50; /* Verde */
+  color: #fff; /* Blanco */
+  border: none;
+  padding: 0.5em 1em;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 1em;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#gremio {
+    width: 150px;
+    height: 30px;
+}
+
+#ausentismo {
+    width: 150px;
+    height: 30px;
+}
+
+#retencion_jud {
+    width: 150px;
+    height: 30px;
+}
+
+h3 {
+    color: black;
+}
+
+/* Estilos para la tabla */
+
+table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 0.5em;
+            text-align: center;
+        }
+        .marron {
+            background-color: #cc9900; /* Verde */
+            color: #fff; /* Blanco */
+        }
+        .naranja {
+            background-color: #ff9900; /* naranja */
+            color: #fff; /* Blanco */
+        }
+
+
+/* Ajustes para pantallas grandes (PC) */
+@media (min-width: 992px) {
+  section {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+/* Ajustes para tabletas */
+@media (min-width: 768px) and (max-width: 991px) {
+  section {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+
+/* Ajustes para móviles */
+@media (max-width: 767px) {
+  body {
+    font-size: 14px; /* Ajusta el tamaño del texto en móviles */
+  }
+
+  header, footer {
+    font-size: 16px;
+  }
+
+  section {
+    width: 100%;
+    padding: 0.5em;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  input[type="tel"] {
+    font-size: 14px; /* Ajusta el tamaño de la fuente en los campos de entrada */
+    margin-bottom: 0.5em; /* Reduce el margen inferior en móviles */
+  }
+
+  button,
+  input[type="submit"] {
+    font-size: 14px; /* Ajusta el tamaño de la fuente en los botones */
+    padding: 0.75em 1.5em; /* Asegúrate de que el botón sea suficientemente grande para tocar */
+  }
+
+  .progress-value {
+    width: 40px; /* Ajusta el ancho de la barra de progreso en móviles */
+  }
+}
